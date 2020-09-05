@@ -1,0 +1,91 @@
+.component-container {
+    height: 100%;
+    .main-left {
+        background-color: #3770ae;
+        height: 100%;
+        width: 33.33%;
+        transition: opacity 0.5s;
+        .toolbar {
+            background-color: rgb(8, 83, 139);
+            height: 40px;
+            border-top: 1px solid #7ca5ce;
+            border-bottom: 1px solid #7ca5ce;
+            p {
+                color: rgb(234, 234, 234);
+                font-size: 16px;
+                margin: 0 0 0 20px;
+            }
+            i {
+                color: #fff;
+                margin-right: 5px;
+                cursor: pointer;
+            }
+        }
+        .menuForm {
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 5px 0 0px 13px;
+            .el-form {
+                .el-form-item__label {
+                    color: #fff;
+                    line-height: 18px;
+                    font-size: 12px;
+                }
+                .el-button {
+                    background-color: #eaeaea;
+                    color: rgb(68, 68, 68);
+                }
+                .el-form-item {
+                    margin-bottom: 10px;
+                }
+                .el-input,
+                .el-select {
+                    width: 225px;
+                }
+                .el-radio__label{
+                    color: #fff;
+                }
+            }
+        }
+    }
+    .main-right {
+        height: 100%;
+        transition: width 0.5s;
+        width: 66.66%;
+        .right-wrapper {
+            position: relative;
+            height: 100%;
+            .el-pagination {
+                background-color: #fff;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 10;
+            }
+        }
+    }
+    .collapse-main-left {
+        display: none;
+    }
+
+    .collapse-main-right {
+        width: calc(100% - 28px);
+    }
+    .toolbar-btn {
+        width: 28px;
+        background-color: rgb(8, 83, 139);
+        height: 100%;
+        display: none;
+        padding-top: 15px;
+        text-align: center;
+        i {
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+    .collapse-tollbar-btn {
+        display: block;
+    }
+}

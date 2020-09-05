@@ -1,11 +1,13 @@
 @import "./transition.scss";
 @import "./sidebar.scss";
+@import "./custom.scss";
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: helvetica neue, arial, sans-serif;
+  background-color: rgb(195, 209, 211)
 }
 
 html {
@@ -130,9 +132,6 @@ aside {
 .big_dialog {
   width: 850px;
 }
-label {
-  font-weight: 700;
-}
 
 .flex-column-spaceBetween {
   //竖向环绕居中
@@ -140,6 +139,13 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+.flex-column-center {
+  //竖向环绕居中
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .flex-row-spaceBetween {
   //横向环绕居中
