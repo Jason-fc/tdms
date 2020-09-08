@@ -12,7 +12,11 @@
       <div class="menuForm">
         <el-form ref="form" :model="form" label-width="137px" size="mini" label-position="left">
           <el-form-item label="适用性：">
-            <el-radio v-model="form.aa" label="1">备选</el-radio>
+             <el-radio-group v-model="form.aa">
+              <el-radio :label="3">备选项</el-radio>
+              <el-radio :label="6">备选项</el-radio>
+              <el-radio :label="9">备选项</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -49,13 +53,17 @@
             </span>
             <el-input v-model="form.ff"></el-input>
           </el-form-item>
-          
+
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search">查询（Search）</el-button>
+            <el-button type="primary" icon="el-icon-plus" v-if="isMaintain">增加（Add）</el-button>
+            <el-button type="primary" icon="el-icon-search" v-else>查询（Search）</el-button>
             <el-button type="primary" icon="el-icon-reset">重置（Reset）</el-button>
           </el-form-item>
-          <el-form-item>
+          <el-form-item v-if="!isMaintain">
             <el-button type="primary" icon="el-icon-s-promotion">导出报表（Export Report）</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-edit" @click="handleMaintain">维护（Maintain）</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -64,7 +72,7 @@
       <div class="right-wrapper">
         <el-table :data="tableData" style="width: 100%;" :height="tableHeight" border>
           <el-table-column type="index" align="center" width="50"></el-table-column>
-          <el-table-column prop="aa">
+          <el-table-column prop="aa" min-width="105">
             <template slot="header">
               <span>
                 客户
@@ -72,87 +80,60 @@
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="bb">
-              <template slot="header">
+          <el-table-column prop="bb" min-width="105">
+            <template slot="header">
               <span>
                 文件号
                 <br />(Doc.No)
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="cc">
-              <template slot="header">
+          <el-table-column prop="cc" min-width="105">
+            <template slot="header">
               <span>
                 手册标题
                 <br />(Doc.Title)
               </span>
             </template>
-            <template slot-scope="scope">
-                <el-link type="primary" @click="detail">{{scope.row.cc}}</el-link>
+            <template slot-scope="scope" min-width="105">
+              <el-link type="primary" @click="detail(scope.row)">{{scope.row.cc}}</el-link>
             </template>
           </el-table-column>
-          <el-table-column prop="dd">
-              <template slot="header">
+          <el-table-column prop="dd" min-width="105">
+            <template slot="header">
               <span>
                 文件类型
                 <br />(Doc.Type)
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="ee">
-              <template slot="header">
+          <el-table-column prop="ee" min-width="115">
+            <template slot="header">
               <span>
                 版次
                 <br />(Revision Level)
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="ff">
-              <template slot="header">
+          <el-table-column prop="ff" min-width="105">
+            <template slot="header">
               <span>
                 生效日期
                 <br />(issue date)
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="gg">
-              <template slot="header">
+          <el-table-column prop="gg" min-width="105">
+            <template slot="header">
               <span>
                 适用性
                 <br />(Applicable)
               </span>
             </template>
           </el-table-column>
-            <el-table-column prop="ff">
-              <template slot="header">
-              <span>
-                生效日期
-                <br />(issue date)
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gg">
-              <template slot="header">
-              <span>
-                适用性
-                <br />(Applicable)
-              </span>
-            </template>
-          </el-table-column>
-            <el-table-column prop="ff">
-              <template slot="header">
-              <span>
-                生效日期
-                <br />(issue date)
-              </span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="gg">
-              <template slot="header">
-              <span>
-                适用性
-                <br />(Applicable)
-              </span>
+           <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain">
+            <template>
+              <el-button type="danger" size="mini" title="失效">失效</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -173,14 +154,15 @@
 </template>
 
 <script>
-import list from './components/list'
+import list from "./components/list";
 export default {
   name: "search",
-  components:{
-      list
+  components: {
+    list,
   },
   data() {
     return {
+      isMaintain:false,
       collapse: false,
       form: {
         aa: "",
@@ -193,109 +175,21 @@ export default {
 
       tableData: [
         {
+          read: false,
           aa: "CCA",
           bb: "测试内容",
           cc: "中英文内容",
-          dd: "EB或MT",
+          dd: "EB",
           ee: "测试内容",
           ff: "测试内容",
           gg: "",
         },
         {
+          read: true,
           aa: "CCA",
           bb: "测试内容",
           cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-         {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-        {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-         {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-        {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-         {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-        {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-         {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-        {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-         {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "",
-        },
-        {
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB或MT",
+          dd: "MT",
           ee: "测试内容",
           ff: "测试内容",
           gg: "",
@@ -303,9 +197,13 @@ export default {
       ],
       currentPage4: 4,
       tableHeight: "auto",
+      publicPath: process.env.BASE_URL,
     };
   },
   methods: {
+    handleMaintain(){
+      this.isMaintain = true;
+    },
     onSubmit() {
       console.log("submit!");
     },
@@ -315,10 +213,21 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    detail(){
-        let _this = this.$refs.list;
+    detail(row) {
+      let _this = this.$refs.list;
+      if (row.read) {
         _this.dialog = true;
-    }
+      } else {
+        // let DownloadLink = document.createElement("a");
+        // document.body.appendChild(DownloadLink);
+        // DownloadLink.style.display = "none";
+        // DownloadLink.target = '_blank'
+        // DownloadLink.href = "JavaScript设计模式与开发实践.pdf";
+        // DownloadLink.click();
+        // document.body.removeChild(DownloadLink);
+        window.open("JavaScript设计模式与开发实践.pdf")
+      }
+    },
   },
   mounted() {
     this.$nextTick(() => {

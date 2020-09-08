@@ -24,11 +24,8 @@ export default {
 
 <style lang="scss" scoped>
 .app-main{
-    position: absolute;
-    top: 159px;
-    left: 40px;
-    bottom: 0;
-    right: 40px;
-    height: calc(100% - 109px);
+    width: 1280px;
+    margin: 0 auto;
+    height: calc(100% - 159px);
 }
 </style>

@@ -13,14 +13,47 @@ export default {
   data() {
     return {
         sideBar:[
+           {
+                name:"Home",
+                title:"首页"
+            },
+            {
+                name:"CCA",
+                title:"国航"
+            },
+            {
+                name:"CAO",
+                title:"国货航"
+            },
+            {
+                name:"Customers",
+                title:"协议客户"
+            },
+            {
+                name:"CMM",
+                title:"附件手册"
+            },
+            {
+                name:"Specifications",
+                title:"标准/规范"
+            },
+            {
+                name:"SB/SL/SIL",
+                title:"通告/函件"
+            },
             {
                 name:"Search",
                 title:"查询"
             },
              {
-                name:"Home",
-                title:"首页"
-            }
+                name:"Effective",
+                title:"有效清单"
+            },
+             {
+                name:"Task/Notice",
+                title:"任务/通知"
+            },
+            
         ]
     };
   },

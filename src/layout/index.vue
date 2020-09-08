@@ -24,7 +24,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .app-wrapper {
-  margin: 0 40px;
+  width: 1280px;
+  margin: 0 auto;
+  height: 728px;
 }
 /* @import url(); 引入css类 */
 </style>

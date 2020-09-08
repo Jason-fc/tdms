@@ -1,4 +1,5 @@
 @import "./transition.scss";
+@import "./element-ui.scss";
 @import "./sidebar.scss";
 @import "./custom.scss";
 body {
@@ -6,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: helvetica neue, arial, sans-serif;
+  font-family: 微软雅黑, Arial, Helvetica, sans-serif;
   background-color: rgb(195, 209, 211)
 }
 

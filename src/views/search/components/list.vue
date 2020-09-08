@@ -18,7 +18,7 @@
               </span>
             </template>
             <template slot-scope="scope">
-                <el-link type="primary">{{scope.row.aa}}</el-link>
+                <el-link type="primary" @click="detail(scope.row)">{{scope.row.aa}}</el-link>
             </template>
           </el-table-column>
           
@@ -46,6 +46,9 @@ export default {
   methods:{
       cancel(){
 
+      },
+      detail(){
+        window.open("JavaScript设计模式与开发实践.pdf")
       }
   }
 };
