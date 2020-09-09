@@ -23,7 +23,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: process.env.NODE_ENV === 'production' ? '/qcap/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/tdms/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: false, // process.env.NODE_ENV === 'development',

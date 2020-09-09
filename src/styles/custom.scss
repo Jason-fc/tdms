@@ -36,6 +36,7 @@
                 .el-button {
                     background-color: #eaeaea;
                     color: rgb(68, 68, 68);
+                    padding: 7px 5px;
                 }
                 .el-form-item {
                     margin-bottom: 10px;
@@ -47,6 +48,24 @@
                 .el-radio__label{
                     color: #fff;
                 }
+                .el-upload__tip{
+                    color: #fff;
+                }
+                a.el-upload-list__item-name{
+                    color: #fff;
+                    i{
+                        color: #fff;
+                    }
+                }
+                .el-upload-list__item:hover{
+                    a.el-upload-list__item-name{
+                        color: #3770ae;
+                        i{
+                            color: #3770ae;
+                        }
+                    }
+                }
+             
             }
         }
     }

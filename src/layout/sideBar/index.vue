@@ -41,6 +41,10 @@ export default {
                 name:"SB/SL/SIL",
                 title:"通告/函件"
             },
+             {
+                name:"EM/MT",
+                title:"EM/MT"
+            },
             {
                 name:"Search",
                 title:"查询"
