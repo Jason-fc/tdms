@@ -5,9 +5,10 @@
     :append-to-body="true"
     :close-on-click-modal="false"
     :visible.sync="dialog"
-    title="手册文件"
+    title="手册文件 Manual File"
     width="860px"
   >
+
     <el-table :data="tableData" style="width: 100%;" border>
           <el-table-column type="index" align="center" width="50"></el-table-column>
           <el-table-column prop="aa" align="center" sortable>

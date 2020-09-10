@@ -79,3 +79,41 @@
   background-color: #08538b;
   border-color: #08538b;
 }
+.el-dialog{
+  border:5px solid rgb(20,113,179);
+  padding:0px;
+  border-radius: 5px;
+  background-color: rgb(20,113,179);
+  width: 600px !important;;
+  .el-dialog__header{
+    height: 35px;
+    line-height: 35px;
+    padding:0 0 0 18px ;
+    background-color: rgb(20,113,179);
+    .el-dialog__title{
+      color: #fff;
+      font-weight: 700;
+    }
+    .el-dialog__headerbtn{
+      top:9px;
+      right: 0;
+      background-color: rgb(214,78,26);
+      border-radius: 4px;
+      height:16px;
+      width:16px;
+      line-height: 16px;
+      .el-dialog__close{
+        color:white;
+        font-size: 14px;
+      }
+    }
+  }
+  .el-dialog__body{
+    padding-top: 3px;
+    background-color: #fff;
+    min-height: 300px;
+  }
+}
+.el-link .el-link--inner{
+  color: rgb(70, 146, 247);
+}
