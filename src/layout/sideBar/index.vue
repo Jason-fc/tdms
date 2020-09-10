@@ -42,8 +42,8 @@ export default {
                 title:"通告/函件"
             },
              {
-                name:"EM/MT",
-                title:"EM/MT"
+                name:"EB/MT",
+                title:"工程通告/维修提示"
             },
             {
                 name:"Search",
@@ -76,7 +76,7 @@ export default {
       background-color: rgb(78, 142, 195);
   }
   .bar-item {
-    flex: 1;
+    flex: auto;
     height: 50px;
     position: relative;
     cursor: pointer;
