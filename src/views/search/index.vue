@@ -18,6 +18,13 @@
           label-position="left"
           v-show="!isMaintain"
         >
+        <el-form-item>
+            <span slot="label">
+              用户
+              <br />(Customer)
+            </span>
+             <el-input v-model="form.bb"></el-input>
+          </el-form-item>
           <el-form-item>
             <span slot="label">
               文件类型：
@@ -31,35 +38,17 @@
           </el-form-item>
            <el-form-item>
             <span slot="label">
-              文件号：
+              文件编号：
               <br />(Doc. No.)
             </span>
              <el-input v-model="form.bb"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              手册标题：
+              标题：
               <br />(Doc. Title)
             </span>
              <el-input v-model="form.cc"></el-input>
-          </el-form-item>
-          <el-form-item>
-             <span slot="label">
-              版次：
-              <br />(Revision Level)
-            </span>
-            <el-input v-model="form.dd"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              生效日期：
-              <br />(Issue Date)
-            </span>
-            <el-date-picker
-              v-model="form.ee"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -71,6 +60,13 @@
             <span slot="label">
               机型：
               <br />(aircraft)
+            </span>
+            <el-select v-model="form.ff"  :disabled="getIsDisable('ff')"></el-select>
+          </el-form-item>
+            <el-form-item>
+            <span slot="label">
+              机号：
+              <br />(number)
             </span>
             <el-select v-model="form.ff"  :disabled="getIsDisable('ff')"></el-select>
           </el-form-item>
@@ -125,14 +121,14 @@
          
           <el-form-item>
             <span slot="label">
-              文件号：
+              文件编号：
               <br />(Doc. No.)
             </span>
              <el-input v-model="addForm.aa"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              手册标题：
+              标题：
               <br />(Doc. Title)
             </span>
              <el-input v-model="addForm.bb"></el-input>
@@ -143,17 +139,6 @@
               <br />(Instruction)
             </span>
              <el-input v-model="addForm.cc"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              文件类型：
-              <br />(Doc. Type)
-            </span>
-            <el-select v-model="addForm.dd">
-              <el-option v-for="item in docType" 
-              :key="item.label"
-              :label="item.label" :value="item.label"></el-option>
-            </el-select>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -180,20 +165,8 @@
             </span>
             <el-input v-model="addForm.gg"></el-input>
           </el-form-item>
-           <el-form-item>
-            <span slot="label">
-              文件颁发者：
-              <br />(Issued BY)
-            </span>
-            <el-input v-model="addForm.hh"></el-input>
-          </el-form-item>
-           <el-form-item>
-            <span slot="label">
-              文件持有者：
-              <br />(Hold by)
-            </span>
-            <el-input v-model="addForm.ii"></el-input>
-          </el-form-item>
+         
+        
           <el-form-item>
             <span slot="label">
               上传手册文件：
@@ -227,45 +200,31 @@
       <div class="right-wrapper">
         <el-table :data="tableData" style="width: 100%;" :height="tableHeight" border>
           <el-table-column type="index" align="center" width="50"></el-table-column>
-          <el-table-column prop="xx" min-width="100">
+          <el-table-column prop="aa" min-width="105">
             <template slot="header">
               <span>
-                下载
-                <br />(Down)
+                用户
+                <br />(Customer)
               </span>
             </template>
              </el-table-column>
              <el-table-column prop="aa" min-width="105">
             <template slot="header">
               <span>
-                文件号
+                文件编号
                 <br />(Doc. No.)
               </span>
             </template>
              </el-table-column>
-       
-       
           <el-table-column prop="cc" min-width="135" sortable>
             <template slot="header">
               <span style="color:#ff4949">
-                手册标题
+                标题
                 <br />(Doc. Title)
               </span>
             </template>
             <template slot-scope="scope">
               <el-link type="primary" @click="detail(scope.row)">{{scope.row.cc}}</el-link>
-            </template>
-          </el-table-column>
-           <el-table-column prop="dd" min-width="140" sortable>
-            <template slot="header">
-              <span>
-                说明
-                <br />(Instruction)
-              </span>
-              
-            </template>
-              <template slot-scope="scope">
-              <el-link type="primary">{{scope.row.cc}}</el-link>
             </template>
           </el-table-column>
           <el-table-column prop="dd" min-width="135" sortable>
@@ -287,7 +246,7 @@
            <el-table-column prop="ff" min-width="135" sortable>
             <template slot="header">
               <span>
-                颁发日期
+                生效日期
                 <br />(issue date)
               </span>
             </template>
@@ -298,22 +257,6 @@
               <span>
                 适用性
                 <br />(Applicable)
-              </span>
-            </template>
-          </el-table-column>
-           <el-table-column prop="ff" min-width="135" sortable>
-            <template slot="header">
-              <span>
-                文件颁发者
-                <br />(Issued by)
-              </span>
-            </template>
-          </el-table-column>
-           <el-table-column prop="ff" min-width="135" sortable>
-            <template slot="header">
-              <span>
-                文件持有者
-                <br />(Hold by)
               </span>
             </template>
           </el-table-column>
