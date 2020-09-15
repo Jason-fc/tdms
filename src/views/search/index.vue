@@ -18,37 +18,40 @@
           label-position="left"
           v-show="!isMaintain"
         >
-        <el-form-item>
+          <el-form-item>
             <span slot="label">
               用户
               <br />(Customer)
             </span>
-             <el-input v-model="form.bb"></el-input>
+            <el-input v-model="form.aa"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               文件类型：
               <br />(Doc. Type)
             </span>
-            <el-select v-model="form.aa">
-              <el-option v-for="item in docType" 
-              :key="item.label"
-              :label="item.label" :value="item.label"></el-option>
+            <el-select v-model="form.bb">
+              <el-option
+                v-for="item in docType"
+                :key="item.label"
+                :label="item.label"
+                :value="item.label"
+              ></el-option>
             </el-select>
           </el-form-item>
-           <el-form-item>
+          <el-form-item>
             <span slot="label">
               文件编号：
               <br />(Doc. No.)
             </span>
-             <el-input v-model="form.bb"></el-input>
+            <el-input v-model="form.cc"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               标题：
               <br />(Doc. Title)
             </span>
-             <el-input v-model="form.cc"></el-input>
+            <el-input v-model="form.dd"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -61,14 +64,14 @@
               机型：
               <br />(aircraft)
             </span>
-            <el-select v-model="form.ff"  :disabled="getIsDisable('ff')"></el-select>
+            <el-select v-model="form.ee" :disabled="getIsDisable('ee')"></el-select>
           </el-form-item>
-            <el-form-item>
+          <el-form-item>
             <span slot="label">
               机号：
               <br />(number)
             </span>
-            <el-select v-model="form.ff"  :disabled="getIsDisable('ff')"></el-select>
+            <el-input v-model="form.ff" :disabled="getIsDisable('ff')"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -118,27 +121,19 @@
           label-position="left"
           v-show="isMaintain"
         >
-         
           <el-form-item>
             <span slot="label">
               文件编号：
               <br />(Doc. No.)
             </span>
-             <el-input v-model="addForm.aa"></el-input>
+            <el-input v-model="addForm.aa"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               标题：
               <br />(Doc. Title)
             </span>
-             <el-input v-model="addForm.bb"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              说明：
-              <br />(Instruction)
-            </span>
-             <el-input v-model="addForm.cc"></el-input>
+            <el-input v-model="addForm.bb"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -149,24 +144,59 @@
           </el-form-item>
           <el-form-item>
             <span slot="label">
-              颁发日期：
+              生效日期：
               <br />(Issue Date)
             </span>
-            <el-date-picker
-              v-model="addForm.ff"
-              type="date"
-              placeholder="选择日期">
-            </el-date-picker>
+            <el-date-picker v-model="addForm.ff" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="适用性：">
             <span slot="label">
               适用性：
               <br />(Applicable)
             </span>
-            <el-input v-model="addForm.gg"></el-input>
           </el-form-item>
-         
-        
+          <el-form-item>
+            <span slot="label">
+              机型：
+              <br />(aircraft)
+            </span>
+            <el-select v-model="addForm.gg"></el-select>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label">
+              机号：
+              <br />(number)
+            </span>
+            <el-input v-model="addForm.hh"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label">
+              发动机：
+              <br />(engine)
+            </span>
+            <el-select v-model="addForm.ii"></el-select>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label">
+              起落架：
+              <br />(lg)
+            </span>
+            <el-input v-model="addForm.jj"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label">
+              APU：
+              <br />(APU)
+            </span>
+            <el-input v-model="addForm.kk"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <span slot="label">
+              附件：
+              <br />(Component)
+            </span>
+            <el-input v-model="addForm.ll"></el-input>
+          </el-form-item>
           <el-form-item>
             <span slot="label">
               上传手册文件：
@@ -174,12 +204,12 @@
             </span>
             <el-upload
               :on-change="handleChange"
-              :file-list="form.component"
-              :limit="1"
+              :file-list="addForm.component"
               action="/"
               :auto-upload="false"
               accept=".pdf"
               :on-remove="handleRemove"
+              multiple
             >
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">文件格式仅支持pdf</div>
@@ -207,15 +237,15 @@
                 <br />(Customer)
               </span>
             </template>
-             </el-table-column>
-             <el-table-column prop="aa" min-width="105">
+          </el-table-column>
+          <el-table-column prop="aa" min-width="105">
             <template slot="header">
               <span>
                 文件编号
                 <br />(Doc. No.)
               </span>
             </template>
-             </el-table-column>
+          </el-table-column>
           <el-table-column prop="cc" min-width="135" sortable>
             <template slot="header">
               <span style="color:#ff4949">
@@ -243,21 +273,43 @@
               </span>
             </template>
           </el-table-column>
-           <el-table-column prop="ff" min-width="135" sortable>
+          <el-table-column prop="ff" min-width="135" sortable>
             <template slot="header">
               <span>
                 生效日期
-                <br />(issue date)
+                <br />(Issue Date)
               </span>
             </template>
           </el-table-column>
-         
+
           <el-table-column prop="gg" min-width="115">
             <template slot="header">
               <span>
                 适用性
                 <br />(Applicable)
               </span>
+            </template>
+            <template slot-scope="scope">
+              <el-popover placement="bottom" width="250" trigger="hover" :open-delay="300">
+                <el-form :model="applicable" size="mini" class="popoverForm">
+                  <el-form-item label="飞机 AIRCRAFT：">
+                    <div>{{applicable.aa}}</div>
+                  </el-form-item>
+                  <el-form-item label="发动机 ENGINE：">
+                    <div>{{applicable.bb}}</div>
+                  </el-form-item>
+                  <el-form-item label="APU：">
+                    <div>{{applicable.cc}}</div>
+                  </el-form-item>
+                  <el-form-item label="LG：">
+                    <div>{{applicable.dd}}</div>
+                  </el-form-item>
+                  <el-form-item label="附件 COMPONENT：">
+                    <div>{{applicable.ee}}</div>
+                  </el-form-item>
+                </el-form>
+                <div slot="reference" class="ellipsis">{{scope.row.gg}}</div>
+              </el-popover>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain">
@@ -292,15 +344,22 @@ export default {
   },
   data() {
     return {
+      applicable: {
+        aa: "2",
+        bb: "3",
+        cc: "4",
+        dd: "5",
+        ee: "6",
+      },
       isMaintain: false,
       collapse: false,
-      docType:[
+      docType: [
         {
-          label:"EB"
+          label: "EB",
         },
         {
-          label:"MT"
-        }
+          label: "MT",
+        },
       ],
       form: {
         aa: "",
@@ -309,10 +368,10 @@ export default {
         dd: "",
         ee: "",
         ff: "",
-        gg:"",
-        hh:"",
-        ii:"",
-        jj:""
+        gg: "",
+        hh: "",
+        ii: "",
+        jj: "",
       },
       addForm: {
         aa: "",
@@ -322,9 +381,11 @@ export default {
         ee: "",
         ff: "",
         gg: "",
-        hh:"",
-        ii:"",
-        jj:"",
+        hh: "",
+        ii: "",
+        jj: "",
+        kk: "",
+        ll: "",
         component: [],
       },
       tableData: [
@@ -336,7 +397,7 @@ export default {
           dd: "EB/MT",
           ee: "测试内容",
           ff: "测试内容",
-          gg: "",
+          gg: "飞机AIRCRAFT:  发动机 ENGINE:",
         },
         {
           read: true,
@@ -346,7 +407,7 @@ export default {
           dd: "EB/MT",
           ee: "测试内容",
           ff: "测试内容",
-          gg: "",
+          gg: "飞机AIRCRAFT:  发动机 ENGINE:",
         },
       ],
       currentPage4: 1,
@@ -354,22 +415,22 @@ export default {
     };
   },
   methods: {
-    getIsDisable(field){
-      let fieldArr = ['ff','gg','hh','ii','jj'];
-      fieldArr = fieldArr.filter(t=>t!==field)
-      let val = fieldArr.some(fie=>{
-        if(this.form[fie]){
-          return true
+    getIsDisable(field) {
+      let fieldArr = ["ee", "ff", "gg", "hh", "ii", "jj"];
+      fieldArr = fieldArr.filter((t) => t !== field);
+      let val = fieldArr.some((fie) => {
+        if (this.form[fie]) {
+          return true;
         }
-      })
-      return val
+      });
+      return val;
     },
     handleChange(file, fileList) {
       var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
       const extension = testmsg === "pdf";
       if (!extension) {
         this.$message.warning("上传文件只能是pdf格式!");
-        this.addForm.file = [];
+        this.addForm.component = [];
         return false;
       }
       this.addForm.component = fileList;
