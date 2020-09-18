@@ -178,7 +178,8 @@ export default {
               message: "添加成功",
               type: "success",
             });
-            this.cancel();
+            this.cancel('reset');
+            this.$parent.$parent.handleMaintain();
             this.loading = false;
             this.$parent.$parent.onReset();
           } else {
@@ -198,7 +199,9 @@ export default {
               message: "修改成功",
               type: "success",
             });
-            this.cancel();
+            this.$parent.$parent.handleMaintain();
+            this.cancel('reset');
+            this.form.dataNumber = '';
             this.loading = false;
             this.$parent.$parent.onReset();
           } else {
@@ -243,6 +246,8 @@ export default {
             if(i !== 'dataNumber'){
               this.form[i] = "";
             }
+          }else{
+             this.form[i] = "";
           }
         } 
         
