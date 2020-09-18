@@ -28,6 +28,11 @@
             overflow-x: hidden;
             padding: 5px 0 0px 13px;
             .el-form {
+                .el-form-item__error {
+                    padding-top: 1px;
+                    position: relative;
+                    top: 3px;
+                }
                 .el-form-item__label {
                     color: #fff;
                     line-height: 18px;

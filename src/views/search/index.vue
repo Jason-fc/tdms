@@ -12,7 +12,7 @@
       <div class="menuForm">
         <el-form
           ref="form"
-          :model="form"
+          :model="searchForm"
           label-width="137px"
           size="mini"
           label-position="left"
@@ -23,20 +23,23 @@
               用户
               <br />(Customer)
             </span>
-            <el-input v-model="form.aa"></el-input>
+            <el-input v-model="searchForm.cus"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               文件类型：
               <br />(Doc. Type)
             </span>
-            <el-select v-model="form.bb">
+            <el-select v-model="searchForm.type">
+            
               <el-option
                 v-for="item in docType"
                 :key="item.label"
                 :label="item.label"
                 :value="item.label"
-              ></el-option>
+              >
+             
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -44,14 +47,14 @@
               文件编号：
               <br />(Doc. No.)
             </span>
-            <el-input v-model="form.cc"></el-input>
+            <el-input v-model="searchForm.mtnbr"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               标题：
               <br />(Doc. Title)
             </span>
-            <el-input v-model="form.dd"></el-input>
+            <el-input v-model="searchForm.subjectZh"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -64,47 +67,55 @@
               机型：
               <br />(aircraft)
             </span>
-            <el-select v-model="form.ee" :disabled="getIsDisable('ee')"></el-select>
+            <el-select
+              v-model="searchForm.effectAircraft"
+              :disabled="getIsDisable('effectAircraft')"
+            ></el-select>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               机号：
               <br />(number)
             </span>
-            <el-input v-model="form.ff" :disabled="getIsDisable('ff')"></el-input>
+            <el-input
+              v-model="searchForm.effectAircraftReg"
+              :disabled="getIsDisable('effectAircraftReg')"
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               发动机：
               <br />(engine)
             </span>
-            <el-select v-model="form.gg" :disabled="getIsDisable('gg')"></el-select>
+            <el-select v-model="searchForm.effectEngine" :disabled="getIsDisable('effectEngine')"></el-select>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               起落架：
               <br />(lg)
             </span>
-            <el-input v-model="form.hh" :disabled="getIsDisable('hh')"></el-input>
+            <el-input v-model="searchForm.effectLg" :disabled="getIsDisable('effectLg')"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               APU：
               <br />(APU)
             </span>
-            <el-input v-model="form.ii" :disabled="getIsDisable('ii')"></el-input>
+            <el-input v-model="searchForm.effectApu" :disabled="getIsDisable('effectApu')"></el-input>
           </el-form-item>
           <el-form-item>
             <span slot="label">
               附件：
               <br />(Component)
             </span>
-            <el-input v-model="form.jj" :disabled="getIsDisable('jj')"></el-input>
+            <el-input
+              v-model="searchForm.effectComponent"
+              :disabled="getIsDisable('effectComponent')"
+            ></el-input>
           </el-form-item>
-
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search">查询（Search）</el-button>
-            <el-button type="primary" icon="el-icon-reset">重置（Reset）</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="onSearch">查询（Search）</el-button>
+            <el-button type="primary" icon="el-icon-reset" @click="onReset">重置（Reset）</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-s-promotion">导出报表（Export Report）</el-button>
@@ -113,132 +124,31 @@
             <el-button type="primary" icon="el-icon-edit" @click="handleMaintain">维护（Maintain）</el-button>
           </el-form-item>
         </el-form>
-        <el-form
-          ref="addForm"
-          :model="addForm"
-          label-width="137px"
-          size="mini"
-          label-position="left"
-          v-show="isMaintain"
-        >
-          <el-form-item>
-            <span slot="label">
-              文件编号：
-              <br />(Doc. No.)
-            </span>
-            <el-input v-model="addForm.aa"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              标题：
-              <br />(Doc. Title)
-            </span>
-            <el-input v-model="addForm.bb"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              版次：
-              <br />(Revision Level)
-            </span>
-            <el-input v-model="addForm.ee"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              生效日期：
-              <br />(Issue Date)
-            </span>
-            <el-date-picker v-model="addForm.ff" type="date" placeholder="选择日期"></el-date-picker>
-          </el-form-item>
-          <el-form-item label="适用性：">
-            <span slot="label">
-              适用性：
-              <br />(Applicable)
-            </span>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              机型：
-              <br />(aircraft)
-            </span>
-            <el-select v-model="addForm.gg"></el-select>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              机号：
-              <br />(number)
-            </span>
-            <el-input v-model="addForm.hh"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              发动机：
-              <br />(engine)
-            </span>
-            <el-select v-model="addForm.ii"></el-select>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              起落架：
-              <br />(lg)
-            </span>
-            <el-input v-model="addForm.jj"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              APU：
-              <br />(APU)
-            </span>
-            <el-input v-model="addForm.kk"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              附件：
-              <br />(Component)
-            </span>
-            <el-input v-model="addForm.ll"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <span slot="label">
-              上传手册文件：
-              <br />(Upload Manual File)
-            </span>
-            <el-upload
-              :on-change="handleChange"
-              :file-list="addForm.component"
-              action="/"
-              :auto-upload="false"
-              accept=".pdf"
-              :on-remove="handleRemove"
-              multiple
-            >
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">文件格式仅支持pdf</div>
-            </el-upload>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="el-icon-plus">增加（Add）</el-button>
-
-            <el-button type="primary" icon="el-icon-reset">重置（Reset）</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="isMaintain = false">取消（Cancel）</el-button>
-          </el-form-item>
-        </el-form>
+        <eform ref="eform" :isMaintain.sync="isMaintain" :is-add="isAdd"></eform>
       </div>
     </div>
     <div class="main-right" :class="collapse?'collapse-main-right':''">
       <div class="right-wrapper">
-        <el-table :data="tableData" style="width: 100%;" :height="tableHeight" border>
+        <el-table
+          :data="tableData"
+          style="width: 100%;"
+          :height="tableHeight"
+          border
+          v-loading="loading"
+        >
           <el-table-column type="index" align="center" width="50"></el-table-column>
-          <el-table-column prop="aa" min-width="105">
+          <el-table-column prop="cus" min-width="210" align="left">
             <template slot="header">
               <span>
                 用户
                 <br />(Customer)
               </span>
             </template>
+            <template slot-scope="scope">
+              <div v-for="item in scope.row.customerArr" :key="item">{{item}}</div>
+            </template>
           </el-table-column>
-          <el-table-column prop="aa" min-width="105">
+          <el-table-column prop="mtnbr" min-width="105">
             <template slot="header">
               <span>
                 文件编号
@@ -246,7 +156,7 @@
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="cc" min-width="135" sortable>
+          <el-table-column prop="subjectZh" min-width="210" sortable>
             <template slot="header">
               <span style="color:#ff4949">
                 标题
@@ -254,10 +164,14 @@
               </span>
             </template>
             <template slot-scope="scope">
-              <el-link type="primary" @click="detail(scope.row)">{{scope.row.cc}}</el-link>
+              <el-link
+                type="primary"
+                @click="detail(scope.row)"
+                :underline="false"
+              >{{scope.row.subjectZh}}</el-link>
             </template>
           </el-table-column>
-          <el-table-column prop="dd" min-width="135" sortable>
+          <el-table-column prop="type" min-width="135" sortable>
             <template slot="header">
               <span>
                 文件类型
@@ -265,7 +179,7 @@
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="ee" min-width="135">
+          <el-table-column prop="revisionLevel" min-width="135">
             <template slot="header">
               <span>
                 版次
@@ -273,7 +187,7 @@
               </span>
             </template>
           </el-table-column>
-          <el-table-column prop="ff" min-width="135" sortable>
+          <el-table-column prop="effdate" min-width="135" sortable>
             <template slot="header">
               <span>
                 生效日期
@@ -289,68 +203,68 @@
                 <br />(Applicable)
               </span>
             </template>
-            <template slot-scope="scope">
+            <template slot-scope="{row}">
               <el-popover placement="bottom" width="250" trigger="hover" :open-delay="300">
-                <el-form :model="applicable" size="mini" class="popoverForm">
+                <el-form :model="row" size="mini" class="popoverForm">
                   <el-form-item label="飞机 AIRCRAFT：">
-                    <div>{{applicable.aa}}</div>
+                    <div>{{row.effectAircraft}}</div>
                   </el-form-item>
                   <el-form-item label="发动机 ENGINE：">
-                    <div>{{applicable.bb}}</div>
+                    <div>{{row.effectEngine}}</div>
                   </el-form-item>
                   <el-form-item label="APU：">
-                    <div>{{applicable.cc}}</div>
+                    <div>{{row.effectApu}}</div>
                   </el-form-item>
                   <el-form-item label="LG：">
-                    <div>{{applicable.dd}}</div>
+                    <div>{{row.effectLg}}</div>
                   </el-form-item>
                   <el-form-item label="附件 COMPONENT：">
-                    <div>{{applicable.ee}}</div>
+                    <div>{{row.effectComponent}}</div>
                   </el-form-item>
                 </el-form>
-                <div slot="reference" class="ellipsis">{{scope.row.gg}}</div>
+                <div
+                  slot="reference"
+                  class="ellipsis"
+                >{{`飞机AIRCRAFT：${row.effectAircraft}发动机 ENGINE：${row.effectEngine}`}}</div>
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain">
-            <template>
-              <el-button type="danger" size="mini" title="失效">失效</el-button>
+          <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain" width="150">
+            <template slot-scope="scope">
+              <el-button type="warning" size="mini" title="修改" @click="edit(scope.row)">修改</el-button>
+              <el-button type="danger" size="mini" title="失效" @click="sxFunc(scope.row.id)">失效</el-button>
             </template>
           </el-table-column>
         </el-table>
+
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[10,20,30,40,50]"
-          :page-size="10"
-          :pager-count="5"
+          :total="total"
+          :current-page="page"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-          background
-        ></el-pagination>
+          @size-change="sizeChange"
+          @current-change="pageChange"
+        />
       </div>
     </div>
-    <list ref="list"></list>
+    <list ref="list" :pdfList="pdfList"></list>
   </el-row>
 </template>
 
 <script>
 import list from "./components/list";
+import { getPageList, queryPdf ,cancel} from "@/api/search";
+import eform from "./components/form";
+import { cleanObject } from "@/utils/index";
 export default {
   name: "search",
   components: {
     list,
+    eform,
   },
   data() {
     return {
-      applicable: {
-        aa: "2",
-        bb: "3",
-        cc: "4",
-        dd: "5",
-        ee: "6",
-      },
+      isAdd:false,
+      loading: false,
       isMaintain: false,
       collapse: false,
       docType: [
@@ -361,119 +275,212 @@ export default {
           label: "MT",
         },
       ],
-      form: {
-        aa: "",
-        bb: "",
-        ee: "",
-        dd: "",
-        ee: "",
-        ff: "",
-        gg: "",
-        hh: "",
-        ii: "",
-        jj: "",
-      },
-      addForm: {
-        aa: "",
-        bb: "",
-        ee: "",
-        dd: "",
-        ee: "",
-        ff: "",
-        gg: "",
-        hh: "",
-        ii: "",
-        jj: "",
-        kk: "",
-        ll: "",
-        component: [],
-      },
-      tableData: [
-        {
-          read: false,
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB/MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "飞机AIRCRAFT:  发动机 ENGINE:",
-        },
-        {
-          read: true,
-          aa: "CCA",
-          bb: "测试内容",
-          cc: "中英文内容",
-          dd: "EB/MT",
-          ee: "测试内容",
-          ff: "测试内容",
-          gg: "飞机AIRCRAFT:  发动机 ENGINE:",
-        },
-      ],
-      currentPage4: 1,
+      searchForm: {},
+
+      tableData: [],
       tableHeight: "auto",
+      size: 10,
+      page: 1,
+      total: 0,
+      pdfList: [],
     };
   },
   methods: {
     getIsDisable(field) {
-      let fieldArr = ["ee", "ff", "gg", "hh", "ii", "jj"];
+      let fieldArr = [
+        "effectAircraft",
+        "effectAircraftReg",
+        "effectEngine",
+        "effectComponent",
+        "effectApu",
+        "effectApu",
+      ];
       fieldArr = fieldArr.filter((t) => t !== field);
       let val = fieldArr.some((fie) => {
-        if (this.form[fie]) {
+        if (this.searchForm[fie]) {
           return true;
         }
       });
       return val;
     },
-    handleChange(file, fileList) {
-      var testmsg = file.name.substring(file.name.lastIndexOf(".") + 1);
-      const extension = testmsg === "pdf";
-      if (!extension) {
-        this.$message.warning("上传文件只能是pdf格式!");
-        this.addForm.component = [];
-        return false;
+    edit(row){
+      this.isAdd = false;
+      let _this = this.$refs.eform;
+      _this.form = {
+        ...row
       }
-      this.addForm.component = fileList;
-    },
-    handleRemove(file, fileList) {
-      this.addForm.component = fileList;
+      queryPdf({ tdmsId: row.id })
+        .then((res) => {
+          if (res.code === "200") {
+            let pdfList = res.obj || [];
+            pdfList.forEach(t=>{
+              t.name = t.fileName;
+              t.uid = t.id;
+            })
+            _this.form.tdmsFileList = pdfList;
+            _this.fileList = pdfList;
+          } else {
+            this.$message.error(res.msg);
+             _this.form.tdmsFileList = [];
+            _this.fileList = [];
+          }
+        })
+        .catch(() => {
+           _this.form.tdmsFileList = [];
+            _this.fileList = [];
+        });
     },
     handleMaintain() {
+      this.isAdd = true;
       this.isMaintain = true;
+    },
+    sxFunc(id){
+      this.$confirm("是否将此条记录更改为失效?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        cancel(id)
+          .then((res) => {
+            if (res.code === "200") {
+              this.$message({
+                message: "操作",
+                type: "success",
+              });
+              this.init();
+            } else {
+              this.$message.error(res.msg);
+            }
+          })
+          .catch((err) => {
+          });
+      });
     },
     onSubmit() {
       console.log("submit!");
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    init() {
+      let params = {
+        ...this.searchForm,
+        pageNum: this.page,
+        pageSize: this.size,
+      };
+      params = cleanObject(params);
+      this.loading = true;
+      getPageList(params)
+        .then((res) => {
+          this.loading = false;
+          if (res.code === "200") {
+            let arr = res.obj || [];
+            arr.forEach((t) => {
+              if (t.cus) {
+                t.customerArr = t.cus.split(";");
+              } else {
+                t.customerArr = [];
+              }
+            });
+            this.tableData = arr;
+            this.total = Number(res.total);
+            if (!res.total) {
+              this.total = 0;
+            }
+          } else {
+            this.$message.error(res.msg);
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    pageChange(e) {
+      for (let i in this.searchForm) {
+        this.searchForm[i] = "";
+      }
+      this.page = e;
+      this.init();
+    },
+    sizeChange(e) {
+      for (let i in this.searchForm) {
+        this.searchForm[i] = "";
+      }
+      this.size = e;
+      // 更换size page重置为1
+      this.page = 1;
+      this.init();
+    },
+    onSearch() {
+      this.init();
+    },
+    onReset() {
+      for (let i in this.searchForm) {
+        this.searchForm[i] = "";
+      }
+      this.init();
     },
     detail(row) {
       let _this = this.$refs.list;
-      if (row.read) {
-        _this.dialog = true;
-      } else {
-        // let DownloadLink = document.createElement("a");
-        // document.body.appendChild(DownloadLink);
-        // DownloadLink.style.display = "none";
-        // DownloadLink.target = '_blank'
-        // DownloadLink.href = "JavaScript设计模式与开发实践.pdf";
-        // DownloadLink.click();
-        // document.body.removeChild(DownloadLink);
-        window.open("JavaScript设计模式与开发实践.pdf");
-      }
+      queryPdf({ tdmsId: row.id })
+        .then((res) => {
+          if (res.code === "200") {
+            this.pdfList = res.obj || [];
+            if (this.pdfList.length == 1) {
+              let url = `${this.fileURL}${this.pdfList[0].filePath}/${this.pdfList[0].fileName}`;
+              window.open(url);
+            } else if (this.pdfList.length > 1) {
+              let _this = this.$refs.list;
+              _this.dialog = true;
+            } else {
+              this.$message.warning('暂无pdf文件');
+            }
+          } else {
+            this.$message.error(res.msg);
+          }
+        })
+        .catch(() => {});
     },
   },
   mounted() {
     this.$nextTick(() => {
       this.tableHeight =
-        document.querySelector(".main-right").offsetHeight - 30;
+        document.querySelector(".main-right").offsetHeight - 33;
+    });
+  },
+  created() {
+    this.$nextTick(() => {
+      this.init();
     });
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+ .el-select-dropdown__wrap{
+  .checkAll ::v-deep{
+    .el-checkbox__label{
+      color:red;
+    }
+  }
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
+  left: 1.25rem;
+  z-index: 1;
+  color: #fff;
+  top: 1px;
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected .check {
+  background-color: #409eff;
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item .check {
+  display: inline-block;
+  position: relative;
+  border: 1px solid #409eff;
+  border-radius: 2px;
+  box-sizing: border-box;
+  width: 0.875rem;
+  height: 0.875rem;
+  vertical-align: middle;
+  margin-right: 10px;
+  transition: border-color 0.25s cubic-bezier(0.71, -0.49, 0.26, 1.46),
+    background-color 0.25s cubic-bezier(0.71, -0.49, 0.26, 1.46);
+}
 </style>

@@ -8,12 +8,13 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: 微软雅黑, Arial, Helvetica, sans-serif;
-  background-color: rgb(195, 209, 211)
+  background-color: rgb(195, 209, 211);
 }
 
 html {
   height: 100%;
   box-sizing: border-box;
+ 
 }
 
 #app {
@@ -89,6 +90,20 @@ div:focus {
     height: 0;
   }
 }
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 10px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 4px;
+//   /*滚动条的背景颜色*/
+//   background-color: #ddd;
+// }
+// ::-webkit-scrollbar-track {
+//   box-shadow: 0px 0 3px rgba(0, 0, 0, 0.3) inset;
+//   border-radius: 4px;
+
+// }
 
 aside {
   background: #eef1f6;
@@ -107,7 +122,6 @@ aside {
   a {
     color: #337ab7;
     cursor: pointer;
-
     &:hover {
       color: rgb(32, 160, 255);
     }
@@ -127,8 +141,6 @@ aside {
 .text-center {
   text-align: center;
 }
-
-
 
 .big_dialog {
   width: 850px;
@@ -175,7 +187,6 @@ aside {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-
 }
 .flex-column-end {
   //纵向从尾开始
