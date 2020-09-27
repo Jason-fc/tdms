@@ -207,7 +207,8 @@
               <el-popover placement="bottom" width="250" trigger="hover" :open-delay="300">
                 <el-form :model="row" size="mini" class="popoverForm">
                   <el-form-item label="飞机 AIRCRAFT：">
-                    <div>{{row.effectAircraft}}</div>
+                    <div>机型：{{row.effectAircraft}}</div>
+                    <div>机号：{{row.effectAircraftReg}}</div>
                   </el-form-item>
                   <el-form-item label="发动机 ENGINE：">
                     <div>{{row.effectEngine}}</div>
@@ -227,6 +228,14 @@
                   class="ellipsis"
                 >{{`飞机AIRCRAFT：${row.effectAircraft}发动机 ENGINE：${row.effectEngine}`}}</div>
               </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column prop="effectDept" min-width="210">
+            <template slot="header">
+              <span>
+                适用部门
+                <br />(CC & Send to)
+              </span>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain" width="150">
