@@ -18,6 +18,28 @@
     </el-form-item>
     <el-form-item>
       <span slot="label">
+        用户：
+        <br />(Customer)
+      </span>
+       <el-select v-model="form.cus"></el-select>
+    </el-form-item>
+    <el-form-item>
+      <span slot="label">
+        文件类型：
+        <br />(Doc. Type)
+      </span>
+       <el-select v-model="form.type">
+              <el-option
+                v-for="item in docType"
+                :key="item.label"
+                :label="item.label"
+                :value="item.label"
+              >
+              </el-option>
+            </el-select>
+    </el-form-item>
+    <el-form-item>
+      <span slot="label">
         文件编号：
         <br />(Doc. No.)
       </span>
@@ -99,6 +121,20 @@
     </el-form-item>
     <el-form-item>
       <span slot="label">
+        主送：
+        <br />(Send to)
+      </span>
+      <el-input v-model="form.mainSendDept"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <span slot="label">
+        抄送：
+        <br />(CC)
+      </span>
+      <el-input v-model="form.ccSendDept"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <span slot="label">
         上传手册文件：
         <br />(Upload Manual File)
       </span>
@@ -146,6 +182,14 @@ export default {
   },
   data() {
     return {
+       docType: [
+        {
+          label: "EB",
+        },
+        {
+          label: "MT",
+        },
+      ],
       form: {
         tdmsFileList: [],
       },

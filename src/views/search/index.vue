@@ -23,7 +23,7 @@
               用户
               <br />(Customer)
             </span>
-            <el-input v-model="searchForm.cus"></el-input>
+            <el-select v-model="searchForm.cus"></el-select>
           </el-form-item>
           <el-form-item>
             <span slot="label">
@@ -230,12 +230,15 @@
               </el-popover>
             </template>
           </el-table-column>
-          <el-table-column prop="effectDept" min-width="210">
+          <el-table-column min-width="210">
             <template slot="header">
               <span>
                 适用部门
-                <br />(CC & Send to)
+                <br />(Send to & CC)
               </span>
+            </template>
+            <template v-slot="{row}">
+              {{row.mainAndTo.join(';')}}
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center" fixed="right" v-if="isMaintain" width="150">
@@ -382,10 +385,17 @@ export default {
           if (res.code === "200") {
             let arr = res.obj || [];
             arr.forEach((t) => {
+              t.mainAndTo = []; //适用部门字段 包含主送和抄送
               if (t.cus) {
                 t.customerArr = t.cus.split(";");
               } else {
                 t.customerArr = [];
+              }
+              if(t.mainSendDept){
+                t.mainAndTo.push(t.mainSendDept)
+              }
+              if(t.ccSendDept){
+                t.mainAndTo.push(t.ccSendDept)
               }
             });
             this.tableData = arr;
